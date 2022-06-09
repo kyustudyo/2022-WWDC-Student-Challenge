@@ -13,14 +13,9 @@ import SceneKit
 class LoadingViewController: UIViewController {
 
     var gameView : GameView!
-
-//    GameView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height))
-//    SCNView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height))
     var mainScene:SCNScene!
-
     //general
     var gameState:GameState = .loading
-
     //nodes
     private var player:Player?
     private var player2: Player?
@@ -29,10 +24,7 @@ class LoadingViewController: UIViewController {
     private var cameraYHolder:SCNNode!
     private var lightStick:SCNNode!
     var emptyNode = SCNNode()
-    
     var goingToSetUpEnemy:Bool = true
-    
-    
     var finalCameraNode:SCNNode!
     //movement
     private var controllerStoredDirection = float2(0.0)
@@ -41,11 +33,10 @@ class LoadingViewController: UIViewController {
     var didRotate = false
     var firstMent = false
     var button  = UIButton()
-    //collisions
+
     private var maxPenetrationDistance = CGFloat(0.0)
     private var replacementPositions = [SCNNode:SCNVector3]()
-
-    //enemies
+    
     private var golemsPositionArray = [String:SCNVector3]()
     private var peoplePositionArray = [String:SCNVector3]()
     private var specialPositionArray = [String:SCNVector3]()
@@ -75,10 +66,7 @@ class LoadingViewController: UIViewController {
         if goingToSetUpEnemy{
             setupEnemies()
         }
-        
-        
         gameState = .playing
-
     }
 
     override var shouldAutorotate: Bool { return true }
@@ -127,15 +115,12 @@ class LoadingViewController: UIViewController {
             self.button.setTitle("\(ment)", for: .normal)
             self.button.titleLabel?.font = UIFont(name: "HelveticaNeue-ThinItalic", size: 30)
             self.button.sizeToFit()
-//            self.button.fadeIn()
             self.button.titleLabel?.blinkFast()
             self.button.addTarget(self, action: #selector(self.didPressBack), for: .touchUpInside)
             self.button.center.x = 150
             self.button.frame.origin.y = self.view.bounds.height - 200
             self.gameView!.addSubview(self.button)
         }
-
-
     }
     
     //MARK:- scene
@@ -148,14 +133,6 @@ class LoadingViewController: UIViewController {
         gameView.antialiasingMode = .multisampling4X
         gameView.delegate = self
         gameView.allowsCameraControl = false
-//        gameView.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
-
-//        gameView.allowsCameraControl = true
-
-
-//        mainScene = SCNScene(named: "art.scnassets/stage3.scn")
-
-
         let paths = Bundle.main.paths(forResourcesOfType: "scn", inDirectory: nil)
         print(paths)
         for path in paths {
@@ -168,64 +145,34 @@ class LoadingViewController: UIViewController {
             }
         }
 
-
         mainScene.physicsWorld.contactDelegate = self
-
-//        gameView.setup2DOverlay()
-//        gameView.setupObservers()
-//        gameView.setup2DOverlay()
-//        gameView.layout2DOverlay()
         gameView.delegate = self
         gameView.scene = mainScene
         gameView.isPlaying = true
-//        gameView.awakeFromNib()
-        
         if goingToSetUpEnemy {
             mainScene.rootNode.childNode(withName: "floor", recursively: false)!.runAction(SCNAction.fadeOpacity(to: 1, duration: 1)){
                 self.getLoadingLabel(string: "Now loading....")
             }
-
-            
         }
         else if !goingToSetUpEnemy {
             mainScene.rootNode.childNode(withName: "floor", recursively: false)!.runAction(SCNAction.fadeOpacity(to: 1, duration: 1.6)){
                 self.getLoadingLabel(string: "             Airpod..?")
             }
-            
-//            let label = UILabel()
-//            label.textColor = UIColor.white
-//            label.font = UIFont(name: "HelveticaNeue-ThinItalic", size: 40)
-//            label.text = "Well..."
-//            label.sizeToFit()
-//            label.center.x = 200
-//            label.frame.origin.y = view.bounds.height - 250
-//            label.blinkFast()
-//            gameView!.addSubview(label)
-            
         }
         
-
         view = gameView//view.addsubview 대신 이렇게 하니까 hp, dpad 등이 뜨네.
-        
-        
         
         if !goingToSetUpEnemy {
             DispatchQueue.main.async {
                 self.button.tintColor = UIColor.white
                 self.button.setTitle("", for: .normal)
                 self.button.titleLabel?.font = UIFont(name: "HelveticaNeue-ThinItalic", size: 30)
-//                self.button.sizeToFit()
-    //            self.button.fadeIn()
                 self.button.titleLabel?.blinkFast()
                 self.button.addTarget(self, action: #selector(self.didPressBack), for: .touchUpInside)
                 self.button.center.x = 150
                 self.button.frame.origin.y = self.view.bounds.height - 200
                 self.gameView!.addSubview(self.button)
             }
-            
-
-
-            
                 self.mainScene.rootNode.childNode(withName: "floor", recursively: false)!.runAction(SCNAction.fadeOpacity(to: 1, duration: 1))
                 {
                     DispatchQueue.main.async {
@@ -241,16 +188,7 @@ class LoadingViewController: UIViewController {
                 self.gameView!.addSubview(self.button)
                     }
             }
-                
-
-            
         }
-        
-        
-        
-        
-        
-        
     }
     @objc func didPressBack (sender: UIButton!) {
         DispatchQueue.main.async {
@@ -282,29 +220,24 @@ class LoadingViewController: UIViewController {
             vc.isFinalVC = true
             self.present(vc, animated: true)
         }
-        
-
     }
     func rotateByOrgin(){
         
         var scene = SCNScene()
-                let paths = Bundle.main.paths(forResourcesOfType: "scn", inDirectory: nil)
-        
-                print(paths)
-                for path in paths {
-                    if path.contains("stage3") {
-                        do {
-                            scene = try SCNScene(url: URL(fileURLWithPath: path),options: nil)
-                        } catch {
-                            print("no wall")
-                        }
-                    }
+        let paths = Bundle.main.paths(forResourcesOfType: "scn", inDirectory: nil)
+
+        print(paths)
+        for path in paths {
+            if path.contains("stage3") {
+                do {
+                    scene = try SCNScene(url: URL(fileURLWithPath: path),options: nil)
+                } catch {
+                    print("no wall")
                 }
-//            finalCameraNode = scene.rootNode.childNode(withName: "camera", recursively: true)!
-//        mainScene.rootNode.addChildNode(finalCameraNode)
+            }
+        }
         SCNTransaction.begin()
-//        let ang = toRadians(angle: Float(-30))
-        SCNTransaction.animationDuration = 3.7//18
+        SCNTransaction.animationDuration = 3.7
         SCNTransaction.completionBlock = {
             self.addButton(ment: "Next")
         }
@@ -312,31 +245,21 @@ class LoadingViewController: UIViewController {
         let scnQuat = SCNQuaternion(0, ang, 0, 1)
         finalCameraNode.rotate(by: scnQuat, aroundTarget: SCNVector3(0,0,0))
         SCNTransaction.commit()
-        
-       
-//
-        
     }
     //MARK:- player
     private func setupPlayer() {
-
         player = Player()
         player!.scale = SCNVector3Make(0.26, 0.26, 0.26)
         player!.position = SCNVector3Make(0.0, 0.0, 0.0)
         player!.rotation = SCNVector4Make(0, 1, 0, Float.pi)
-
-
-
         mainScene.rootNode.addChildNode(player!)
         player?.opacity = 0
-//        player!.geometry?.firstMaterial!.diffuse.contents = UIColor.black
         player!.setupCollider(with: 0.26)
         player!.setupWeaponCollider(with: 0.26)
     }
     private func setupPlayer2() {
 
         let target = mainScene.rootNode.childNode(withName: "target", recursively: false)!
-
         player2 = Player()//에어팟위에있는놈. 골렘이 아니다.
         player2!.scale = SCNVector3Make(0.26, 0.26, 0.26)
         player2!.position = target.worldPosition
@@ -347,30 +270,20 @@ class LoadingViewController: UIViewController {
         player2!.setupWeaponCollider(with: 0.26)
     }
 
-
     //MARK:- touches + movement
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
 
         for touch in touches {
 
             if gameView.virtualDPadBounds().contains(touch.location(in: gameView)) {
-//                print("1")
                 if padTouch == nil {
-//                    print("2")//첫dp
                     padTouch = touch
-                    print("touch 했다.")
-//                    gameView.dpHide()
-//                    gameView.dpShow()
-
                     controllerStoredDirection = float2(0.0)
                 }
 
             } else if gameView.virtualAttackButtonBounds().contains(touch.location(in: gameView)) {
-//                print("3")//어택
                 player!.attack1()
-
             } else if cameraTouch == nil {//아무데도아닌곳
-//                print("4")
                 cameraTouch = touches.first
             }
 
@@ -381,7 +294,6 @@ class LoadingViewController: UIViewController {
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
 
         if let touch = padTouch {
-//            print("a")
             let displacement = float2(touch.location(in: view)) - float2(touch.previousLocation(in: view))
             print("csd: \(controllerStoredDirection)")
             let vMix = mix(controllerStoredDirection, displacement, t: 0.1)
@@ -390,10 +302,8 @@ class LoadingViewController: UIViewController {
             controllerStoredDirection = vClamp
 
         } else if let touch = cameraTouch {
-//            print("b")
             let displacement = float2(touch.location(in: view)) - float2(touch.previousLocation(in: view))
 
-//            panCamera(displacement)
         }
     }
 
@@ -419,7 +329,6 @@ class LoadingViewController: UIViewController {
 
             let p1 = pov.presentation.convertPosition(SCNVector3(direction), to: nil)
             let p0 = pov.presentation.convertPosition(SCNVector3Zero, to: nil)
-//            print("p1\(p1),p0\(p0)")
             direction = float3(Float(p1.x-p0.x), 0.0, Float(p1.z-p0.z))
 
             if direction.x != 0.0 || direction.z != 0.0 {
@@ -522,17 +431,9 @@ class LoadingViewController: UIViewController {
     //MARK:- enemies
     private func setupEnemies() {
 
-//        let enemies = mainScene.rootNode.childNode(withName: "Enemies", recursively: false)!
         let people = mainScene.rootNode.childNode(withName: "people", recursively: false)!
         let special = mainScene.rootNode.childNode(withName: "special", recursively: false)!
         //정보가져가려고 한것. 그림에서도 빈노드로 만든것.
-//        print(enemies)
-//        for child in enemies.childNodes {
-//
-//            golemsPositionArray[child.name!] = child.position
-//
-//        }
-
 
         for child in people.childNodes {
             peoplePositionArray[child.name!] = child.worldPosition
@@ -586,10 +487,7 @@ class LoadingViewController: UIViewController {
             (finished) in
             self.prepareHelper(golems: specials, golemScale: specialScale)
         }
-
     }
-
-
 }
 extension LoadingViewController: SCNPhysicsContactDelegate {
 
@@ -600,7 +498,6 @@ extension LoadingViewController: SCNPhysicsContactDelegate {
         //if player collide with wall
         contact.match(BitmaskWall) {
             (matching, other) in
-//            print("1mo",matching,other)
             self.characterNode(other, hitWall: matching, withContact: contact)
         }
 
@@ -616,15 +513,13 @@ extension LoadingViewController: SCNPhysicsContactDelegate {
     }
 
     func physicsWorld(_ world: SCNPhysicsWorld, didUpdate contact: SCNPhysicsContact) {
-
-        //if player collide with wall
+        
         contact.match(BitmaskWall) {
             (matching, other) in
 
             self.characterNode(other, hitWall: matching, withContact: contact)
         }
 
-        //if player collide with golem
         contact.match(BitmaskGolem) {
             (matching, other) in
 
@@ -663,7 +558,6 @@ extension LoadingViewController:SCNSceneRendererDelegate {
     func renderer(_ renderer: SCNSceneRenderer, updateAtTime time: TimeInterval) {
 
         if gameState != .playing { return }
-
         //reset
         replacementPositions.removeAll()
         maxPenetrationDistance = 0.0
@@ -694,7 +588,6 @@ extension LoadingViewController:SCNSceneRendererDelegate {
 }
 extension LoadingViewController {
     func prepareHelper(golems:[Golem], golemScale:Float){
-//        print("count", golems.count)
         for g in golems {
             self.mainScene.rootNode.addChildNode(g)
             g.setupCollider(scale: CGFloat(golemScale))
