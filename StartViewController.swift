@@ -39,9 +39,6 @@ extension UIView{
 class StartViewController: UIViewController {
 //
     var gameView : SCNView? = SCNView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height))
-
-//    SCNView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height))
-
     var mainScene:SCNScene!
     var floors = SCNNode()
     var f1Node = [SCNNode]()
@@ -61,13 +58,7 @@ class StartViewController: UIViewController {
     var emptyNode = SCNNode()
     var button  = UIButton()
 
-
-//    private var _hud: HUD!
-
-
     override func viewDidLoad() {
-
-
 
         super.viewDidLoad()
 
@@ -83,11 +74,8 @@ class StartViewController: UIViewController {
             }
         }
         
-
-
         DispatchQueue.main.async {
 
-            
             let label2 = UILabel()
             label2.textColor = UIColor.white
             label2.font = UIFont(name: "HelveticaNeue-ThinItalic", size: 25)
@@ -133,7 +121,6 @@ class StartViewController: UIViewController {
                     boxPerson = mainScene.rootNode.childNode(withName: "hands", recursively: false)!
 
                     personNode = boxPerson.childNode(withName: "handAni", recursively: false)!
-//            mainScene.rootNode.addChildNode(personNode)
                     tmpNode.addChildNode(personNode)
 
                     boxNode = boxPerson.childNode(withName: "hand", recursively: false)!
@@ -142,66 +129,19 @@ class StartViewController: UIViewController {
             cinemaCameraNode.childNode(withName: "rotate", recursively: false)!.runAction(SCNAction.repeatForever(SCNAction.rotate(by: 1, around: SCNVector3(1,0,0), duration: 1)))
 
             emptyNode = mainScene.rootNode.childNode(withName: "emptyWhichIsNeeded", recursively: false)!
-//                    for i in 1...5 {//뺏어가기도 하는구나 addchild하면.
-//                        let floor = mainScene.rootNode.childNode(withName: "f\(i)", recursively: true)!
-//        //                floor.runAction(SCNAction.scale(by: 1.4, duration: 8))
-//                        floors.addChildNode(floor)
-//                    }
-        //
-        //
-        //
-//                    floors.childNode(withName: "f1", recursively: false)?.enumerateChildNodes({ node,_  in
-//                        switch node.name {
-//                        case "box3" :
-//                            f1Node.append(node)
-//                        default :
-//                            break
-//                        }
-//                    })
-        //
-//                    f1Node[0].childNode(withName: "e", recursively: false)?.enumerateChildNodes({ node, _ in
-//
-//                        specialNodeE.append(node)
-//                    })
-//                    f1Node[0].childNode(withName: "n", recursively: false)?.enumerateChildNodes({ node, _ in
-//
-//                        specialNodeN.append(node)
-//                    })
-        //
-//                    for i in 1...5 {
-//                        floors.childNode(withName: "f\(i)", recursively: false)?.enumerateChildNodes({ node,_  in
-//                            switch node.name {
-//                            case "box3" :
-//                                allFloorNode.append(node)
-//                            default :
-//                                break
-//                            }
-//                        })
-//                    }
 
                     for i in 0..<allFloorNode.count {//이름 붙여서 호명 쉽게.
 
                         allFloorNode[i].name = "floorBox\(i)"
                     }
-        //
                     mainScene.rootNode.addChildNode(floors)//@
             mainScene.rootNode.addChildNode(emptyNode)
                     view.scene = mainScene
 
                     let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap(gestureRecognize: )))
                     view.addGestureRecognizer(tapGesture)
-//                    let panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePan(gestureRecognize: )))
-//                    view.addGestureRecognizer(panGesture)
-//                    restAction()
-//                    setUpAction()
-//                    aniArray[1] = true
-//                    count += 1
-//                    addAction()
                 }
-//        DispatchQueue.main.async {
             GameSound.music(self.mainScene.rootNode.childNode(withName: "camera", recursively: false)!)
-//        }
-        
         }
     @objc func didPressBack (sender: UIButton!) {
 //        dismiss(animated: true, completion: nil)
@@ -216,18 +156,11 @@ class StartViewController: UIViewController {
             restAction()
         }
         DispatchQueue.main.async {
-//                    print(self.button.titleLabel?.text)
-//                    self.button.removeFromSuperview()
             self.button.layer.removeAllAnimations()
             self.button.isHidden = true
         }
 
-//        addAction()
     }
-
-
-
-
     //아래 다 애니메이션
     func setUpAction(){
         driveAction = SCNAction.moveBy(x: -14, y: 0, z: 7, duration: 20)
@@ -240,8 +173,6 @@ class StartViewController: UIViewController {
 
             SCNTransaction.begin()
             SCNTransaction.animationDuration = 1//2
-
-//            SCNTransaction.animationTimingFunction = (CAMediaTimingFunction(name: .easeInEaseOut))
             emptyNode.position  = SCNVector3(x: emptyNode.position.x, y: emptyNode.position.y, z: emptyNode.position.z + 30)
             SCNTransaction.completionBlock = { ()->Void in
                 SCNTransaction.begin()
@@ -250,90 +181,36 @@ class StartViewController: UIViewController {
                 SCNTransaction.animationTimingFunction = (CAMediaTimingFunction(name: .easeInEaseOut))
                 self.emptyNode.position  = SCNVector3(x: self.emptyNode.position.x, y: self.emptyNode.position.y, z: self.emptyNode.position.z - 30)
                 SCNTransaction.completionBlock = {
-//                    self.restAction()
+
                     self.addAction()
                     print("3")
                 }
                 SCNTransaction.commit()
             }
             SCNTransaction.commit()
-
-
-
-
-//            boxNode.opacity = 0
-//            mainScene.rootNode.addChildNode(tmpNode)
-//            tmpNode.addChildNode(cinemaCameraNode)
-//            SCNTransaction.begin()
-//            SCNTransaction.animationDuration = 1
-//            SCNTransaction.animationTimingFunction = (CAMediaTimingFunction(name: .easeInEaseOut))
-//            tmpNode.runAction(SCNAction.rotate(by: 5, around: SCNVector3(x:0 , y: 1, z: 0), duration: 1))
-//            SCNTransaction.completionBlock = { () -> Void in
-//                print("끝")
-//
-//            }
-//
-//            SCNTransaction.commit()
-//
-
-//            SCNTransaction.completionBlock = { () -> Void in
-//                print("끝1")
-//                SCNTransaction.completionBlock = ({ () -> Void in
-//                    print("끝2")
-//                })
-//                SCNTransaction.commit()
-//            }
-//            SCNTransaction.commit()
         }
     }
         func addAction(){
             let rotate = SCNAction.rotate(by: 3, around: SCNVector3(x: 0, y: 1, z: 0), duration: 5)
-            
-//            let a = SKAction.playSoundFileNamed("voice.wav", waitForCompletion: false)
-//            SKAction.repeatForever(a)
-//            GameSound.explosion(cinemaCameraNode)
-//            let url = Bundle.main.url(forResource: "voice", withExtension: "wav")!
-//            let source = SCNAudioSource(url: url)!
-//            let act = SCNAction.playAudio(source, waitForCompletion: false)
-//            self.mainScene.rootNode.runAction(act)
-//            playAudio()
-            
-            
             rotate.speed = 1
-//            driveAction.speed = 1/CGFloat(5/1) + 5
-//            driveAction2.speed = 1/CGFloat(5/1) + 1
-    //        boxNode.runAction(driveAction2)
             if aniArray[1] == true {
-//            boxPerson.runAction(driveAction)//사람 이동.
-//            aniArray[1] = false
-//                personNode = boxPerson.childNode(withName: "handAni", recursively: false)!
-
-//                boxNode.opacity = 0
-//                mainScene.rootNode.addChildNode(tmpNode)
-
-
                 tmpNode.addChildNode(cinemaCameraNode)
                 SCNTransaction.begin()
                 SCNTransaction.animationDuration = 1//3
                 SCNTransaction.animationTimingFunction = (CAMediaTimingFunction(name: .easeInEaseOut))
-//                box.rotation = SCNVector4Make(0, 1, 0, .pi/16)
                 tmpNode.position = SCNVector3(x: tmpNode.position.x, y: tmpNode.position.y+2, z: tmpNode.position.z)
-//                cinemaCameraNode.position = SCNVector3(x: cinemaCameraNode.position.x, y: cinemaCameraNode.position.y+2, z: cinemaCameraNode.position.z)
                 SCNTransaction.completionBlock = { () -> Void in
 
                     SCNTransaction.begin()
                     SCNTransaction.animationDuration = 1//4
                     SCNTransaction.animationTimingFunction = (CAMediaTimingFunction(name: .easeInEaseOut))
-
-        //            self.towerAttach.position = SCNVector3(self.towerAttach.position.x, self.towerAttach.position.y - 0.1, self.towerAttach.position.z)
-//                    self.f1Node[0].rotation = SCNVector4Make(0, 1, 0, -.pi/16)
                     self.tmpNode.position = SCNVector3(x: self.tmpNode.position.x+8, y: self.tmpNode.position.y, z: self.tmpNode.position.z )
                     SCNTransaction.completionBlock = ({ () -> Void in
 //                        self.f1Dance()
                         print("all end")
                         self.mainScene.rootNode.childNode(withName: "camera", recursively: false)!.removeFromParentNode()
 //                        self.playAudio()
-                        
+
                         let vc = ViewController()
                         vc.modalPresentationStyle = .overFullScreen
                         self.present(vc, animated: true)
@@ -344,87 +221,23 @@ class StartViewController: UIViewController {
                 }
                 SCNTransaction.commit()
             }
-
-            //{
-//            if aniArray[2] == true {
-////                animateTower()
-////                f1Dance()
-//
-////                eDance(index: 0)// 수정필
-////                nDance(index: 0)// 수정필
-//
-//                self.boxPerson.runAction(rotate)// 모두가 회전
-//                self.personNode.runAction(self.driveAction2)//사람내려옴
-//                self.boxNode.runAction(self.driveAction2){
-//                    self.boxNode.runAction(SCNAction.fadeOpacity(to: 0, duration: 4))
-//                    self.floors.runAction(SCNAction.scale(by: 1.4, duration: 6))
-//                    self.personNode.runAction(.rotate(by: -1.9, around: SCNVector3(x: 0, y: 1, z: 0), duration: 3))
-//                }
-//        }
-
-
-
         }
     
     func playAudio() {
         var soundEffect: AVAudioPlayer?
-
-      
-            
-
             let url = Bundle.main.url(forResource: "voice", withExtension: "wav")
-
             if let url = url{
-
-                //code
-
-                
-
                 do {
-
                     soundEffect = try AVAudioPlayer(contentsOf: url)
 
                     guard let sound = soundEffect else { return }
-
-                    
-
                     sound.prepareToPlay()
-
                     sound.play()
-
                 } catch let error {
-
                     print(error.localizedDescription)
-
                 }
-
             }
-
         }
-
-
-//        @objc func handlePan(gestureRecognize: UIPanGestureRecognizer) {
-//
-//            let xTranslation = Float(gestureRecognize.translation(in: gestureRecognize.view!).x)
-//
-//            //HANDLE PAN GESTURE HERE
-//            /////////////////////////
-//
-//            if gestureRecognize.state == UIGestureRecognizer.State.began || gestureRecognize.state == UIGestureRecognizer.State.changed {
-//
-//                floors.panBeginMoved(xTranslationToCheckNegative: xTranslation)
-//            }
-//
-//            var angle:Float = (xTranslation * Float(M_PI)) / 700.0
-//            let angleRatio = angle / Float(M_PI_4)
-//            angle += floors.rotationCurrent
-//            floors.rotation = SCNVector4(0,1,0,angle)
-//
-//            if gestureRecognize.state == UIGestureRecognizer.State.ended || gestureRecognize.state == UIGestureRecognizer.State.cancelled {
-//                floors.realign(angleRatio: angleRatio)
-//            }
-//
-//        }
         func nDance(index:Int){
             SCNTransaction.begin()
             SCNTransaction.animationDuration = 0.1
@@ -474,15 +287,12 @@ class StartViewController: UIViewController {
 
                 SCNTransaction.completionBlock = ({ () -> Void in
                     if index + 1 == self.specialNodeE.count {
-
-    //                    self.eDance(index: 0)//반복
                     }
                     else {
                         self.eDance(index: index+1)
                     }
 
                 })
-
                 SCNTransaction.commit()
             }
 
@@ -499,8 +309,6 @@ class StartViewController: UIViewController {
                 SCNTransaction.begin()
                 SCNTransaction.animationDuration = 0.5
                 SCNTransaction.animationTimingFunction = (CAMediaTimingFunction(name: .easeInEaseOut))
-
-    //            self.towerAttach.position = SCNVector3(self.towerAttach.position.x, self.towerAttach.position.y - 0.1, self.towerAttach.position.z)
                 self.f1Node[0].rotation = SCNVector4Make(0, 1, 0, -.pi/16)
                 self.allFloorNode[4].position = SCNVector3(x: self.allFloorNode[4].position.x, y: self.allFloorNode[4].position.y, z: self.allFloorNode[4].position.z - 0.4)
                 SCNTransaction.completionBlock = ({ () -> Void in
@@ -510,15 +318,12 @@ class StartViewController: UIViewController {
                 SCNTransaction.commit()
             }
             SCNTransaction.commit()
-
         }
 
         func animateTower(){
             SCNTransaction.begin()
             SCNTransaction.animationDuration = 3
             SCNTransaction.animationTimingFunction = (CAMediaTimingFunction(name: .easeInEaseOut))
-
-    //        towerAttach.position = SCNVector3(towerAttach.position.x, towerAttach.position.y + 0.1, towerAttach.position.z)
             floors.rotation = SCNVector4Make(0, 1, 0, .pi/18)
 
             SCNTransaction.completionBlock = { () -> Void in
@@ -526,8 +331,6 @@ class StartViewController: UIViewController {
                 SCNTransaction.begin()
                 SCNTransaction.animationDuration = 3
                 SCNTransaction.animationTimingFunction = (CAMediaTimingFunction(name: .easeInEaseOut))
-
-    //            self.towerAttach.position = SCNVector3(self.towerAttach.position.x, self.towerAttach.position.y - 0.1, self.towerAttach.position.z)
                 self.floors.rotation = SCNVector4Make(0, 1, 0, -.pi/18)
 
                 SCNTransaction.completionBlock = ({ () -> Void in
@@ -538,7 +341,6 @@ class StartViewController: UIViewController {
             }
             SCNTransaction.commit()
         }
-
         @objc func handleTap(gestureRecognize: UIGestureRecognizer) {
             // retrieve the SCNView
             let scnView = gameView!
@@ -550,14 +352,8 @@ class StartViewController: UIViewController {
             if hitResults.count > 0 {
                 // retrieved the first clicked object
                 let result: AnyObject! = hitResults[0]
-
                 let resultNode = result.node! as SCNNode
                 if let name = resultNode.name {
-
-    //                let key = scene.keysAttach.childNode(withName: name, recursively: true)!
-
-                    // get its material
-    //                let material = key.geometry!.firstMaterial!
                     print("name:",name)
                     var node = SCNNode()
                     for i in allFloorNode {
@@ -565,17 +361,13 @@ class StartViewController: UIViewController {
                             node = i
                         }
                     }
-
-                    print("nG",node.name, node.geometry?.name)
                     let material = node.geometry?.firstMaterial!
 
                     //position기억하는 골렘앱처럼 포지션은 가져오는 걸 해볼까?
                     //누르면 소리나게?
                     //말하는것처럼
                     SCNTransaction.begin()
-    //                SCNTransaction.setAnimationDuration(0.0)
                     SCNTransaction.animationDuration = 1.5
-    //                SCNTransaction.setAnimationDuration(0.0)
                     SCNTransaction.completionBlock = {
                         ()-> Void in
                         SCNTransaction.begin()
@@ -593,35 +385,14 @@ class StartViewController: UIViewController {
                     node.position = SCNVector3(x: node.position.x, y: node.position.y , z: node.position.z+0.5)
 
                     SCNTransaction.commit()
-
-
-    //                print(player2)
-                   // player.playKey(keyName: name)
-                    // highlight it
-
-
-                    //THIS IS WHERE YOU HANDLE THE SCNTRANSACTION
-                    /////////////////////////////////////////////
-
                     SCNTransaction.begin()
-    //                SCNTransaction.setAnimationDuration(0.0)
                     SCNTransaction.animationDuration = 0.0
-    //                SCNTransaction.setAnimationDuration(0.0)
                     SCNTransaction.completionBlock = {
                         ()-> Void in
                         SCNTransaction.begin()
                         SCNTransaction.animationDuration = 0.5
-
-    //                    material.emission.contents = UIColor.black
-    //                    key.position = SCNVector3(x: key.position.x, y: key.position.y - 0.2, z: key.position.z)
-
                         SCNTransaction.commit()
                     }
-
-
-    //                material.emission.contents = UIColor.red
-    //                key.position = SCNVector3(x: key.position.x, y: key.position.y + 0.2, z: key.position.z)
-
                     SCNTransaction.commit()
 
 
@@ -643,32 +414,7 @@ class StartViewController: UIViewController {
                 return .all
             }
         }
-
-
-
-
-
-
 }
 extension StartViewController {
     
 }
-
-//extension StartViewController: SCNSceneRendererDelegate {
-//
-//    func updateMoving(){
-//        if boxPerson.position.x <= 8 && boxPerson.position.z >= 7{
-//            boxPerson.position = SCNVector3(x: 7, y: 0, z: 7)
-//        }
-//    }
-//    func renderer(_ renderer: SCNSceneRenderer, didApplyAnimationsAtTime time: TimeInterval) {
-//
-////        updatePositions()
-////        updateTraffic()
-//        updateMoving()
-//    }
-//    
-//    
-//
-//}
-

@@ -20,9 +20,6 @@ class Player_light : SCNNode, CAAnimationDelegate {
             
                 }
                 else {
-//                    characterNode.removeAllActions()
-//                    characterNode.removeAllAnimations()
-//                    characterNode.removeAnimation(forKey: "walk", blendOutDuration: 0.01)
                 }
             }
         }
@@ -77,32 +74,17 @@ class Player_light : SCNNode, CAAnimationDelegate {
             
         default: break
         }
-        
-        
-        print(characterNode.name)
-//        characterNode = daeHolderNode.childNode(withName: "ani1", recursively: true)!
-//        characterNode = daeHolderNode.childNode(withName: "staticman", recursively: true)!
-//        characterNode.scale = SCNVector3(x: 70, y: 70, z: 70)
     }
     //MARK:- animations
     private func loadAnimations() {
         
         loadAnimation(inSceneNamed: "inplaceWalk", withIdentifier: "unnamed_animation__0")
-        
-
-        
-        
-        
     }
     func applyWalk(){
         characterNode.addAnimation(walkAnimation, forKey: "walk")
-        
     }
-    
-    
     private func loadAnimation( inSceneNamed scene:String, withIdentifier identifier:String) {
         
-
         let animationObject:CAAnimation = animationFromSceneNamed(path: "Sd")!
         
         animationObject.delegate = self

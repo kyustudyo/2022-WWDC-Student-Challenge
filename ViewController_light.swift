@@ -20,7 +20,6 @@ class LightViewController: UIViewController, CAAnimationDelegate {
     var player : Player_light!
     var player_2 : Player_light!
     var player_3 : Player_light!
-//    var player2 : Player2!
     var mainScene : SCNScene!
     var boxNode : SCNNode!
     var mapNode : SCNNode!
@@ -54,7 +53,6 @@ class LightViewController: UIViewController, CAAnimationDelegate {
     
     var fourText:SCNNode!
     var threeText:SCNNode!
-//    var count = 0
     var aniArray:[Bool] = Array(repeating: false, count: 100)
     
     private func setupPlayer() {
@@ -64,11 +62,7 @@ class LightViewController: UIViewController, CAAnimationDelegate {
         player!.position = SCNVector3Make(0.0, 0.0, 60)
         let ang = toRadians(angle: Float(0))
         player.rotation = SCNVector4(0, 1, 0, ang)
-//        player!.rotation = SCNVector4Make(0, 1, 0, Float.pi)
         mainScene.rootNode.addChildNode(player!)
-//        player.removeAllActions()
-//        player.removeAllAnimations()
-
         player.characterNode.removeAllAnimations()//처음엔 걷지마
         player.characterNode.removeAllActions()
 
@@ -80,12 +74,7 @@ class LightViewController: UIViewController, CAAnimationDelegate {
         player_2.clothOrder = 1
         let ang2 = toRadians(angle: Float(20))
         player_2.rotation = SCNVector4(0, 1, 0, ang2)
-//        player!.rotation = SCNVector4Make(0, 1, 0, Float.pi)
         mainScene.rootNode.addChildNode(player_2!)
-        
-
-
-
         player_3 = Player_light(clothOrder: 2)
         player_3!.scale = SCNVector3Make(30,30,30)
         player_3!.position = SCNVector3Make(-15, 0.0, -0)
@@ -93,82 +82,43 @@ class LightViewController: UIViewController, CAAnimationDelegate {
         player_3.castsShadow = false
         let ang3 = toRadians(angle: Float(110))
         player_3.rotation = SCNVector4(0, 1, 0, ang3)
-//        player!.rotation = SCNVector4Make(0, 1, 0, Float.pi)
         mainScene.rootNode.addChildNode(player_3!)
-        
-        
-
-
-
-
     }
-//    private func setupPlayer2() {
-//
-//        player2 = Player2()
-//        player2!.scale = SCNVector3Make(1*0.5, 1*0.5, 1*0.5)
-//        player2!.position = SCNVector3Make(3.0, 0.0, 20)
-////        player2!.rotation = SCNVector4Make(0, 1, 0, Float.pi)
-////        player2.removeAllAnimations()
-//        mainScene.rootNode.addChildNode(player2!)
-//
-//    }
-
     var button = UIButton(type: .system)
     func addButton(ment:String){
 
         DispatchQueue.main.async {
-            
-            
-//            SCNTransaction.begin()
-//            SCNTransaction.animationDuration = 3
-//
-//            SCNTransaction.commit()
-            
-            
             self.button.tintColor = UIColor.white
             self.button.setTitle("\(ment)", for: .normal)
             self.button.titleLabel?.font = UIFont(name: "HelveticaNeue-ThinItalic", size: 30)
             self.button.sizeToFit()
-//            self.button.fadeIn()
             self.button.titleLabel?.blink()
             self.button.addTarget(self, action: #selector(self.didPressBack), for: .touchUpInside)
-            
             self.button.center.x = 150
             self.button.frame.origin.y = self.view.bounds.height - 200
             self.scnView.addSubview(self.button)
         }
-
-
     }
-
     @objc func didPressBack (sender: UIButton!) {
-            
             clickCount += 1
             aniArray[clickCount] = true
             DispatchQueue.main.async {
             self.button.removeFromSuperview()
             self.addAction()
         }
-        
-        
     }
-    //@@
     func addAction(){
         if aniArray[2] {
             
-
                GameSound.lightsec_0(cameraNode)
                 let spotPosition2 = SCNNode()
                 spotPosition2.position = SCNVector3(x: 0 , y:10  , z: -57 )
                 SCNTransaction.begin()
                 SCNTransaction.animationDuration = 7
-
                 ambientNode.light?.intensity = 100
                 firstLight.position = SCNVector3(x: firstLight.position.x, y: firstLight.position.y + 5, z: firstLight.position.z - 43)
                 firstLight.constraints = [SCNLookAtConstraint(target: spotPosition2)]
                 SCNTransaction.commit()
-
-
                 player.applyWalk()
                 SCNTransaction.begin()
                 SCNTransaction.animationDuration = 5
@@ -178,9 +128,7 @@ class LightViewController: UIViewController, CAAnimationDelegate {
                 spotPosition.position = SCNVector3(x: 0 , y: 2 , z: 3 )
                 cameraNode.constraints = [SCNLookAtConstraint(target: spotPosition)]
                 SCNTransaction.commit()
-
                 let ang = toRadians(angle: Float(180))
-
                 let rot = SCNAction.rotate(by: CGFloat(ang), around: SCNVector3(x: 0, y: 1, z: 0), duration: 0.8)
                 let ac = SCNAction.move(to: SCNVector3Make(0, 0, 20), duration: 3)
                 ac.timingMode = .easeInEaseOut
@@ -190,13 +138,6 @@ class LightViewController: UIViewController, CAAnimationDelegate {
                         self.player.characterNode.removeAnimation(forKey: "walk", blendOutDuration: 1)
                     }
                 }
-
-
-
-
-
-
-            
             aniArray[2] = false
         }
         
@@ -221,36 +162,18 @@ class LightViewController: UIViewController, CAAnimationDelegate {
                 B.runAction(opacityAction){
                     SCNTransaction.begin()
                     SCNTransaction.animationDuration = 1
-
                     self.directionalNode.light?.shadowColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1)
                     SCNTransaction.commit()
                 }
             aniArray[3] = false
         }
-        
         if aniArray[4] {
-            
             aniArray[4] = false
-//            SCNTransaction.begin()
-//            SCNTransaction.animationDuration = 2
-//            SCNTransaction.completionBlock = {
                 GameSound.lightsec_2(self.cameraNode)
-                
-//                SCNTransaction.commit()
-//            }
             let ang = toRadians(angle: Float(180))
             firstLight.runAction(SCNAction.rotateBy(x: 0, y: CGFloat(ang), z: 0, duration: 5)){
                 self.addButton(ment: "Turn on the light")
             }
-//            firstLight.removeFromParentNode()
-//            SCNTransaction.commit()
-            
-            
-//            GameSound.lightsec_2(cameraNode)
-            
-//            firstLight.removeFromParentNode()
-            
-            
         }
         if aniArray[5] {
             GameSound.lightsec_3(cameraNode)
@@ -258,18 +181,13 @@ class LightViewController: UIViewController, CAAnimationDelegate {
             firstLight.light?.intensity = 0
             ambientNode.light?.intensity = 30
             setupSpotLight()
-            let ang = toRadians(angle: Float(180))
+            let _ = toRadians(angle: Float(180))
             firstLight.runAction(SCNAction.rotateBy(x: 0, y: 0, z: 0, duration: 5)){
                 self.addButton(ment: "Rotate!")
             }
-            
-            
-            
-            
         }
         if aniArray[6] {
             GameSound.lightsec_4(cameraNode)
-            
             let act2 = SCNAction.rotate(by: 0.8, around: SCNVector3(x: 0, y: -0.3, z: 0), duration: 0.7)
             let act3 = SCNAction.rotate(by: 1.6, around: SCNVector3(x: 0, y: 0.3, z: 0), duration: 1.4)
             let act4 = SCNAction.rotate(by: 0.8, around: SCNVector3(x: 0, y: -1.4, z: 0), duration: 0.7)
@@ -279,9 +197,7 @@ class LightViewController: UIViewController, CAAnimationDelegate {
             act4.speed = 8
             directionalNode.runAction(action){
                 self.addButton(ment: "Next")
-                
             }
-            
             aniArray[6] = false
         }
         if aniArray[7] {
@@ -289,11 +205,8 @@ class LightViewController: UIViewController, CAAnimationDelegate {
             
             SCNTransaction.begin()
             SCNTransaction.animationDuration = 1
-
-
             player_2.opacity = 1
             player_2.castsShadow = true
-//                self.cyliderNode.position = SCNVector3(x: 3, y: 3, z: 3)
             SCNTransaction.commit()
 
             aniArray[7] = false
@@ -316,7 +229,6 @@ class LightViewController: UIViewController, CAAnimationDelegate {
             firstLight.runAction(SCNAction.rotateBy(x: 0, y: 0, z: 0, duration: 2)){
                 self.addButton(ment: "Next")
             }
-            
             aniArray[8] = false
         }
         if aniArray[9] {
@@ -324,21 +236,14 @@ class LightViewController: UIViewController, CAAnimationDelegate {
             firstLight.runAction(SCNAction.rotateBy(x: 0, y: 0, z: 0, duration: 4.5)){
                 self.addButton(ment: "Another example!")
             }
-            
             player_3.runAction(SCNAction.fadeOpacity(to: 0, duration: 1))
             SCNTransaction.begin()
             SCNTransaction.animationDuration = 1
-            
             player_3.castsShadow = false
-
             plainFloor.opacity = 1
             sittingNode.opacity = 1
             fourThings.opacity = 1
-            
-            
-
             sittingNode.castsShadow = true
-//                self.cyliderNode.position = SCNVector3(x: 3, y: 3, z: 3)
             SCNTransaction.commit()
             
             aniArray[9] = false
@@ -348,8 +253,6 @@ class LightViewController: UIViewController, CAAnimationDelegate {
             firstLight.runAction(SCNAction.rotateBy(x: 0, y: 0, z: 0, duration: 2.5)){
                 self.player.applyWalk()
                 self.directionalNode.light?.castsShadow = false
-    //            let ang = toRadians(angle: -Float(90))
-    //            directionalNode.rotation = SCNVector4(0, 1, 0, ang)
                 let angle = toRadians(angle: CGFloat(-90))
 
                 let moveXdistance = Float(68)
@@ -380,8 +283,6 @@ class LightViewController: UIViewController, CAAnimationDelegate {
                 }
                 
                 self.cameraNode.constraints = []
-
-    //            let spotAct = SCNAction.move(to: SCNVector3(x: spotPosition.position.x + moveXdistance, y: spotPosition.position.y, z: player.position.z), duration: 6)
                 self.cameraNode.runAction(act3)
                 self.fourText.opacity = 1
                 self.threeText.opacity = 1
@@ -415,7 +316,6 @@ class LightViewController: UIViewController, CAAnimationDelegate {
         
     }
     
-    
     override func viewDidLoad() {
 
         super.viewDidLoad()
@@ -435,8 +335,6 @@ class LightViewController: UIViewController, CAAnimationDelegate {
             }
         }
 
-
-
 //        mainScene = SCNScene(named: "art.scnassets/9x9.scn")!
         mapNode = temScene.rootNode.childNode(withName: "map", recursively: true)!
         let bgNode = temScene.rootNode.childNode(withName: "carpet", recursively: true)!
@@ -454,7 +352,7 @@ class LightViewController: UIViewController, CAAnimationDelegate {
         person2.opacity = 0
         person2.scale = SCNVector3(x: 50, y: 50, z: 50)
         plainFloor =  temScene.rootNode.childNode(withName: "plainFloor", recursively: true)!
-        let zz = temScene.rootNode.childNode(withName: "zz", recursively: true)!
+        let _ = temScene.rootNode.childNode(withName: "zz", recursively: true)!
 
         fourText = temScene.rootNode.childNode(withName: "four", recursively: false)!
         threeText = temScene.rootNode.childNode(withName: "three", recursively: false)!
@@ -470,7 +368,6 @@ class LightViewController: UIViewController, CAAnimationDelegate {
         sittingNode.opacity = 0
         cyliderNode.opacity = 0
         cyliderNode.castsShadow = true
-//        let box = temScene.rootNode.childNode(withName: "box", recursively: true)!
         mainScene = SCNScene()
         A = temScene.rootNode.childNode(withName: "A", recursively: true)!
         B = temScene.rootNode.childNode(withName: "B", recursively: true)!
@@ -491,11 +388,6 @@ class LightViewController: UIViewController, CAAnimationDelegate {
         mainScene.rootNode.addChildNode(fourText)
         mainScene.rootNode.addChildNode(threeText)
         mainScene.rootNode.addChildNode(floor)
-//        mainScene.rootNode.addChildNode(zz)
-//        mainScene.rootNode.addChildNode(no)
-
-//        mainScene.rootNode.addChildNode(box)
-        // set the scene to the view
         scnView.scene = mainScene
         scnView.backgroundColor = .black
 
@@ -512,21 +404,8 @@ class LightViewController: UIViewController, CAAnimationDelegate {
             
             self.addButton(ment: "Start!")//좀있다 시작하려고
         }
-        
-
-        // allows the user to manipulate the camera
-        
-//        scnView.allowsCameraControl = true
-
-        // show statistics such as fps and timing information
-//        scnView.showsStatistics = true
-
         // configure the view
         scnView.backgroundColor = UIColor.brown
-
-        // add a tap gesture recognizer
-//        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap(_:)))
-//        scnView.addGestureRecognizer(tapGesture)
     }
 
 
@@ -535,10 +414,7 @@ class LightViewController: UIViewController, CAAnimationDelegate {
         geometry2.firstMaterial?.diffuse.contents = UIColor.red
         boxNode = SCNNode(geometry: geometry2)
         boxNode.position = SCNVector3(0,0,0)
-
-//        boxNode2.pivot = SCNMatrix4MakeTranslation(0, 0.1, 0)
         boxNode.opacity = 0.0
-//        boxNode.physicsBody = .kinematic()
         boxNode.name = "ccq"
         mainScene.rootNode.addChildNode(boxNode)
     }
@@ -546,13 +422,6 @@ class LightViewController: UIViewController, CAAnimationDelegate {
     func setupCamera(){
         cameraNode = temScene.rootNode.childNode(withName: "camera", recursively: true)!
         mainScene.rootNode.addChildNode(cameraNode)
-//        cameraNode2 = temScene.rootNode.childNode(withName: "camera2", recursively: true)!
-//        self.mainScene.rootNode.addChildNode(self.cameraNode2)
-
-//        cameraNode.camera = SCNCamera()
-//        mainScene.rootNode.addChildNode(cameraNode)
-//        cameraNode.position = SCNVector3(x: 0, y: 50, z: 25)
-//        cameraNode.eulerAngles = SCNVector3(x: -toRadians(angle: 60), y: 0, z: -toRadians(angle: 0))
     }
 
     func setupSpotLight(){
@@ -562,22 +431,14 @@ class LightViewController: UIViewController, CAAnimationDelegate {
         lightNodeSpot.light!.spotOuterAngle = 86//삼각꼴 입체 빛 . 크면 넓게 비춤.
         lightNodeSpot.light!.attenuationStartDistance = 0
         lightNodeSpot.light!.attenuationFalloffExponent = 30//크면 빨리 빛이 줄어든다.
-
-//        directionalNode.position = SCNVector3(x: 2, y: 2, z: -5)
 //        directionalNode.eulerAngles = SCNVector3(x: toRadians(angle: 170), y: toRadians(angle: 50), z: toRadians(angle: 180))
         lightNodeSpot.light!.attenuationEndDistance = 40 // 크면 너무 밝다.
 //        lightNodeSpot.position = SCNVector3(x: 2, y: 2, z: -5)
         lightNodeSpot.position = SCNVector3(x: 17.2, y: 16, z: -14.68)//1
-//        lightNodeSpot.position = SCNVector3(x: 16.76, y: 5.6, z: -15.36)//2
-//        lightNodeSpot.eulerAngles = SCNVector3(x: toRadians(angle: 170), y: toRadians(angle: 50), z: toRadians(angle: 180))
         let spotPosition = SCNNode()
         spotPosition.position = SCNVector3(x: -15.2, y: 4.3, z: 0)
 //        spotPosition.position = SCNVector3(x: 0, y: 0, z: 0)
         lightNodeSpot.constraints = [SCNLookAtConstraint(target: spotPosition)]
-
-//        cameraNode.constraints = [SCNLookAtConstraint(target: spotPosition)]
-
-//        lightNode.addChildNode(ambientNode)
         lightNode.addChildNode(lightNodeSpot)
         mainScene.rootNode.addChildNode(lightNode)
     }
@@ -599,13 +460,8 @@ class LightViewController: UIViewController, CAAnimationDelegate {
         directionalNode.light?.castsShadow = true
 //        directionalNode.light?.shadowMode = .forward
         directionalNode.light?.shadowColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0)
-
 //        directionalNode.position = SCNVector3(x: 3, y: 3, z: -3)//position이 없어도되네
         directionalNode.eulerAngles = SCNVector3(x: toRadians(angle: 172.52), y: toRadians(angle:48.14), z: toRadians(angle: -176.9))
-//        print(directionalNode.position)
-//        directionalNode.eulerAngles = SCNVector3(x: toRadians(angle: 174), y: toRadians(angle:29), z: toRadians(angle: -176.9))
-//        print(directionalNode.position)
-
         lightNode.addChildNode(ambientNode)
         ambientNode.light?.intensity = 200
         lightNode.addChildNode(directionalNode)
@@ -614,24 +470,9 @@ class LightViewController: UIViewController, CAAnimationDelegate {
 
     }
     func turnOffLight(){
-
-//        firstLight.removeFromParentNode()
-
-
-//        lightNode.position = SCNVector3(x: lightNode.position.x, y: lightNode.position.y, z: lightNode.position.z)
-//        print(lightNode.position )
-//        setupSpotLight()
-//        SCNTransaction.commit()
-//        ambientNode.light?.intensity = 0
-
     }
     func setupFloor(){
-
-
-
     }
-
-
     func setupActions() {
         let moveUpAction = SCNAction.moveBy(x: 0, y: 1.0, z: 0, duration: 0.15)
         let moveDownAction = SCNAction.moveBy(x: 0, y: -1.0, z: 0, duration: 0.15)

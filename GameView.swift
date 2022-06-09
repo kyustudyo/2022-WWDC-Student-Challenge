@@ -2,8 +2,6 @@
 import SceneKit
 import SpriteKit
 
-//will hold the SpriteKit 2D UI
-
 class GameView: SCNView {
     
     private var skScene:SKScene!
@@ -113,13 +111,7 @@ class GameView: SCNView {
         return virtualAttackButtonBounds
     }
     
-    //MARK:- HP bar
     private func setupHpBar(with scene:SKScene) {
-//        dpadSprite.position = CGPoint(x: 10.0, y: 10.0)
-//        dpadSprite.xScale = 1.0
-//        dpadSprite.yScale = 1.0
-//        dpadSprite.anchorPoint = CGPoint(x: 0.0, y: 0.0)
-//        dpadSprite.size = CGSize(width: 150.0, height: 150.0)
         hpBarMaxWidth = customWidth
         
         hpBar = SKSpriteNode(color: UIColor.green, size: CGSize(width: 0 , height: 20))
@@ -140,14 +132,11 @@ class GameView: SCNView {
         
         guard let userInfo = notification.userInfo as? [String:Any], let playerMaxHp = userInfo["playerMaxHp"] as? Float, let currentHp = userInfo["currentHp"] as? Float else { return }
         
-//        let v1 = CGFloat(playerMaxHp)
         let v1 = CGFloat(100)
         let v2 = hpBarMaxWidth
         let v3 = CGFloat(currentHp)
         print("v3v3",v3)
         var x:CGFloat = 0.0
-        //105 * x =
-        //100 * x = 150 * 90 -> x = (150 * 90) / 100
         x = (v2 * v3) / v1
         
         if x >= hpBarMaxWidth / 3.5 {
@@ -158,12 +147,7 @@ class GameView: SCNView {
             
             hpBar.color = UIColor.orange
         }
-        print("\(x)몇이누")
-
         let reduceAction = SKAction.resize(toWidth: x, duration: 0.3)
-        print("v3:\(v3)")
-        
-         
         hpBar.run(reduceAction)
         
         if v3 > 98 {

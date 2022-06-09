@@ -7,8 +7,6 @@ enum GolemAnimationType {
     
     case walk, attack1, dead
 }
-//골렘이 공중에 떠있으면 못때림.
-//
 class Golem:SCNNode {
     
     //general
@@ -66,13 +64,13 @@ class Golem:SCNNode {
         }
     }
     
-    //attack
+    
     private var isAttacking = false
     private var lastAttackTime:TimeInterval = 0.0
     private var attackTimer:Timer?
     private var attackFrameCounter = 0
     
-    //battle
+    
     private var hpPoints:Float = 70.0
     private var isDead = false
     
@@ -96,7 +94,7 @@ class Golem:SCNNode {
         
         name = "Golem"
         
-//        let idleURL = Bundle.main.url(forResource: "art.scnassets/Scenes/Enemies/Golem@Idle", withExtension: "dae")
+
         var idleScene = SCNScene()
         let paths = Bundle.main.paths(forResourcesOfType: "scn", inDirectory: nil)
         
@@ -111,10 +109,6 @@ class Golem:SCNNode {
             }
         }
         
-        
-//        let idleURL = Bundle.main.url(forResource: "inplaceWalk", withExtension: "scn")
-//        let idleScene = try! SCNScene(url: idleURL!, options: nil)
-        
         for child in idleScene.rootNode.childNodes {
             
             daeHolderNode.addChildNode(child)
@@ -123,17 +117,15 @@ class Golem:SCNNode {
         addChildNode(daeHolderNode)
         characterNode = daeHolderNode
         characterNode.scale = SCNVector3(x: 40, y: 40, z: 40)
-//        characterNode = daeHolderNode.childNode(withName: "CATRigHub002", recursively: true)!
+
     }
     
     //MARK:- animations
     private func loadAnimations() {
         loadAnimation(animationType: .walk, inSceneNamed: "inplaceWalk", withIdentifier: "unnamed_animation__0")
-
     }
     
     private func loadAnimation(animationType:GolemAnimationType, inSceneNamed scene:String, withIdentifier identifier:String) {
-
 
         let animationObject:CAAnimation = animationFromSceneNamed(path: "Sd")!
         animationObject.delegate = self
@@ -250,7 +242,6 @@ class Golem:SCNNode {
         }
     }
     
-    //MARK:- collisions
     func setupCollider(scale:CGFloat) {
         
         let geometry = SCNCapsule(capRadius: 1, height: 22)
@@ -267,7 +258,6 @@ class Golem:SCNNode {
         
         collider.physicsBody!.contactTestBitMask = BitmaskPlayer | BitmaskPlayerWeapon
         //BitmaskWall을 지워도 계단 오를 수 있다.
-        
         gameView.prepare([collider]) {
             (finished) in
             
@@ -304,10 +294,8 @@ class Golem:SCNNode {
                 }
                 else if isItSpecial! {
                     originEnemy.gotHit(with: 5)
-//                    enemy.gotHit(with: 1)
                     dance()
                 }
-//                print("hit!")
                 didHit = true//한번만 떠려라
             }
         }

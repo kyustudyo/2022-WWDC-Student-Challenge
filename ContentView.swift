@@ -5,7 +5,6 @@ import SceneKit
 
 struct ViewControllerRepresentation: UIViewControllerRepresentable {
     
-    
     func makeUIViewController(context: Context) -> ViewController {
         ViewController()
     }

@@ -53,7 +53,6 @@ class Player:SCNNode {
         }
     }
     
-    //collisions
     var replacementPosition:SCNVector3 = SCNVector3Zero
     private var activeWeaponCollideNodes = Set<SCNNode>()
     
@@ -79,27 +78,6 @@ class Player:SCNNode {
     
     //MARK:- scene
     private func setupModel() {
-//        var scn = SCNScene()
-//        let pathk = Bundle.main.paths(forResourcesOfType: "scn", inDirectory: nil)
-//        print(pathk)
-//        for path in pathk {
-//            if path.contains("staticHand") {
-//                do {
-//                scn = try SCNScene(url: URL(fileURLWithPath: path),options: nil)
-//                } catch {
-//                    print("no wall")
-//                }
-//            }
-//        }
-//        for child in scn.rootNode.childNodes {
-//            daeHolderNode.addChildNode(child)
-//        }
-//        addChildNode(daeHolderNode)
-//        characterNode = daeHolderNode
-        
-        
-        
-        
         //load dae childs
         var playerScene = SCNScene()
         let paths = Bundle.main.paths(forResourcesOfType: "scn", inDirectory: nil)
@@ -122,52 +100,16 @@ class Player:SCNNode {
         
         
     }
-//    func getDark(){
-//        daeHolderNode.geometry?.firstMaterial?.diffuse.contents = UIColor.black
-////            characterNode.geometry?.firstMaterial?.diffuse.contents = UIColor.black
-//        
-//    }
-    //MARK:- animations
+
     private func loadAnimations() {
         loadAnimation(animationType: .walk, inSceneNamed: "inplaceWalk", withIdentifier: "unnamed_animation__0")
-        
-        
-        
-//        loadAnimation(animationType: .walk, inSceneNamed: "art.scnassets/Scenes/Hero/walk", withIdentifier: "WalkID")
-        
-        
-//        loadAnimation(animationType: .attack1, inSceneNamed: "art.scnassets/Scenes/Hero/attack", withIdentifier: "attackID")
-//
-//        loadAnimation(animationType: .dead, inSceneNamed: "art.scnassets/Scenes/Hero/die", withIdentifier: "DeathID")
-        
     }
     
     private func loadAnimation(animationType:PlayerAnimationType, inSceneNamed scene:String, withIdentifier identifier:String) {
-//       var playerScene = SCNScene()
-//        let paths = Bundle.main.paths(forResourcesOfType: "scn", inDirectory: nil)
-//        print(paths)
-//        for path in paths {
-//            if path.contains("inplaceWalk") {
-//                print(path)
-//                do {
-//                    playerScene = try SCNScene(url: URL(fileURLWithPath: path),options: nil)
-//
-//                } catch {
-//                    print("no wall")
-//                }
-//            }
-//        }
-        
         let sceneURL = Bundle.main.url(forResource: scene, withExtension: "scn")!
-//        print(sceneURL)
-//        
         let sceneSource = SCNSceneSource(url: sceneURL, options: nil)!
-//        animationFromSceneNamed(path: "Sd")
-        
         let animationObject:CAAnimation = animationFromSceneNamed(path: "Sd")!
-//        sceneSource.entryWithIdentifier(identifier, withClass: CAAnimation.self)!
-        
-//        let  a = daeHolderNode.animationKeys[0]
+
         animationObject.delegate = self
         animationObject.fadeInDuration = 0.2
         animationObject.fadeOutDuration = 0.2
@@ -268,16 +210,13 @@ class Player:SCNNode {
     func weaponCollide(with node:SCNNode) {
         
         activeWeaponCollideNodes.insert(node)
-//        print("activeWeaponCollideNodes \(activeWeaponCollideNodes.count)")
     }
     
     func weaponUnCollide(with node:SCNNode) {
         
         activeWeaponCollideNodes.remove(node)
-//        print("activeWeaponCollideNodes \(activeWeaponCollideNodes.count)")
     }
     
-    //MARK:- battle
     func gotHit(with hpPoints:Float) {
 //        print("gothit")
         self.hpPoints += hpPoints
@@ -327,7 +266,6 @@ class Player:SCNNode {
         }
     }
     
-    //MARK:- weapon
     func setupWeaponCollider(with scale:CGFloat) {
         
         let geometryBox = SCNBox(width: 160.0, height: 140.0, length: 160.0, chamferRadius: 0.0)
@@ -364,23 +302,13 @@ extension Player: CAAnimationDelegate {
     }
 }
 
-
-
-
-
-
-
-
-
 func animationFromSceneNamed(path: String) -> CAAnimation? {
     
     
     var playerScene = SCNScene()
         let paths = Bundle.main.paths(forResourcesOfType: "scn", inDirectory: nil)
-//        print(paths)
         for path in paths {
             if path.contains("inplaceWalk") {
-//                print(path)
                 do {
                     playerScene = try SCNScene(url: URL(fileURLWithPath: path),options: nil)
 
@@ -403,6 +331,4 @@ func animationFromSceneNamed(path: String) -> CAAnimation? {
     })
     return animation
 }
-//let animation = animationFromSceneNamed("art.scnassets/animation.dae")
-//myNode.addAnimation(animation, forKey: "anim")
 
