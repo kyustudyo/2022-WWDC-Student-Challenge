@@ -3,11 +3,11 @@
 import Foundation
 import SceneKit
 
-enum GolemAnimationType {
+enum ZombieAnimationType {
     
     case walk, attack1, dead
 }
-class Golem:SCNNode {
+class Zombie:SCNNode {
     
     //general
     var gameView:GameView!
@@ -125,7 +125,7 @@ class Golem:SCNNode {
         loadAnimation(animationType: .walk, inSceneNamed: "inplaceWalk", withIdentifier: "unnamed_animation__0")
     }
     
-    private func loadAnimation(animationType:GolemAnimationType, inSceneNamed scene:String, withIdentifier identifier:String) {
+    private func loadAnimation(animationType:ZombieAnimationType, inSceneNamed scene:String, withIdentifier identifier:String) {
 
         let animationObject:CAAnimation = animationFromSceneNamed(path: "Sd")!
         animationObject.delegate = self
@@ -332,7 +332,7 @@ class Golem:SCNNode {
 }
 
 //MARK:- extensions
-extension Golem: CAAnimationDelegate {
+extension Zombie: CAAnimationDelegate {
     
     func animationDidStop(_ anim: CAAnimation, finished flag: Bool) {
         

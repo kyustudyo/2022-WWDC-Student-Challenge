@@ -10,7 +10,7 @@ class GameView: SCNView {
     private var attackButtonSprite:SKSpriteNode!
     private var hpBar:SKSpriteNode!
     private var hpBarMaxWidth:CGFloat = 100
-    var label = SKLabelNode(text: "hihi")
+    
     var needDp = false
     var customWidth = CGFloat()
     //MARK:- lifecycle

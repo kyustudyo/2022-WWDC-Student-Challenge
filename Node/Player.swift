@@ -258,7 +258,7 @@ class Player:SCNNode {
             
             for node in activeWeaponCollideNodes {
                 
-                if let golem = node as? Golem {
+                if let golem = node as? Zombie {
                     
                     golem.gotHit(by: node, with: 30.0)
                 }

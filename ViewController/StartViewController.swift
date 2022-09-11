@@ -6,14 +6,6 @@
 //
 
 import Foundation
-//
-//  ViewController.swift
-//  wwwdc
-//
-//  Created by Hankyu Lee on 2022/04/13.
-//
-
-import Foundation
 import UIKit
 import SceneKit
 import SpriteKit

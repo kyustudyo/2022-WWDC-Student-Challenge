@@ -451,12 +451,12 @@ class LoadingViewController: UIViewController {
 
         let golemScale:Float = 0.28//0.28
         let specialScale:Float = 0.7//0.7
-        var golems: [Golem] = [Golem]()
-        var specials: [Golem] = [Golem]()
+        var golems: [Zombie] = [Zombie]()
+        var specials: [Zombie] = [Zombie]()
         print("spc2",peoplePositionArray.count)
         for i in 1...peoplePositionArray.count {
             print("\(i)번째 사람: \(peoplePositionArray["inplaceWalk\(i)"]!)")
-            golems.append(Golem(enemy: player!, view: gameView))
+            golems.append(Zombie(enemy: player!, view: gameView))
             golems[i-1].scale = SCNVector3Make(golemScale, golemScale, golemScale)
             print(i)
             golems[i-1].position = peoplePositionArray["inplaceWalk\(i)"]!
@@ -476,7 +476,7 @@ class LoadingViewController: UIViewController {
         }
         print("spc,",specialPositionArray.count)
         for i in 1...specialPositionArray.count {
-            specials.append(Golem(enemy: player2!, view: gameView, isItSpecial: true))
+            specials.append(Zombie(enemy: player2!, view: gameView, isItSpecial: true))
             specials[i-1].originEnemy = player!
             specials[i-1].scale = SCNVector3Make(specialScale, specialScale, specialScale)
             specials[i-1].position = specialPositionArray["special\(i)"]!
@@ -506,7 +506,7 @@ extension LoadingViewController: SCNPhysicsContactDelegate {
 
             (matching, other) in
 //            print("2mo", matching,other)
-            let golem = matching.parent as! Golem
+            let golem = matching.parent as! Zombie
             if other.name == "collider" { golem.isCollideWithEnemy = true }
             if other.name == "weaponCollider" { player!.weaponCollide(with: golem) }
         }
@@ -523,7 +523,7 @@ extension LoadingViewController: SCNPhysicsContactDelegate {
         contact.match(BitmaskGolem) {
             (matching, other) in
 
-            let golem = matching.parent as! Golem
+            let golem = matching.parent as! Zombie
             if other.name == "collider" { golem.isCollideWithEnemy = true }
             if other.name == "weaponCollider" { player!.weaponCollide(with: golem) }
         }
@@ -535,7 +535,7 @@ extension LoadingViewController: SCNPhysicsContactDelegate {
         contact.match(BitmaskGolem) {
             (matching, other) in
 
-            let golem = matching.parent as! Golem
+            let golem = matching.parent as! Zombie
             if other.name == "collider" { golem.isCollideWithEnemy = false }
             if other.name == "weaponCollider" { player!.weaponUnCollide(with: golem) }
         }
@@ -577,7 +577,7 @@ extension LoadingViewController:SCNSceneRendererDelegate {
                 switch name {
 
                 case "Golem":
-                    (node as! Golem).update(with: time, and: scene)
+                    (node as! Zombie).update(with: time, and: scene)
 
                 default:
                     break
@@ -587,7 +587,7 @@ extension LoadingViewController:SCNSceneRendererDelegate {
     }
 }
 extension LoadingViewController {
-    func prepareHelper(golems:[Golem], golemScale:Float){
+    func prepareHelper(golems:[Zombie], golemScale:Float){
         for g in golems {
             self.mainScene.rootNode.addChildNode(g)
             g.setupCollider(scale: CGFloat(golemScale))
