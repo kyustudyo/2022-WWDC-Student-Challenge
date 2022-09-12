@@ -14,7 +14,7 @@ What you take for granted may not be the truth (당연하다고 여긴것이 진
 | <img src="https://user-images.githubusercontent.com/77485339/189519959-be24f7f0-b540-4957-a13a-52140c3457fb.png" width="250"> | <img src="https://user-images.githubusercontent.com/77485339/189520082-607f6300-7bbb-4bfb-a6b3-7bc647680631.png" width="250"> | <img src="https://user-images.githubusercontent.com/77485339/189520650-a0f82208-8c12-4c43-bca0-84596053bbc0.png" width="250"> |<img src="https://user-images.githubusercontent.com/77485339/189520676-5098af95-8360-455a-89a8-74a11b5d95c5.png" width="250"> |
 
 
-- [앱 시연 영상]() (To be continued)
+- [앱 시연 영상](https://www.youtube.com/watch?v=3iZQ1FoaM1c)
 
 
 ## Reference
