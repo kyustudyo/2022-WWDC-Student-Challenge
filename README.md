@@ -2,8 +2,8 @@
 ## 앱 제출 이름: Scenario World
 SceneKit을 이용하며 영화컨셉임을 나타내는 이름 입니다.
 ## 내용 🔍 
-Let's think from a different perspective (보이는게 전부가 아닐 수 있다.) 🫣 
-What you take for granted may not be the truth (당연하다고 여긴것이 진실이 아니었던 적이 있는가..?)
+There is more than meets the eye. (보이는게 전부가 아닐 수 있다.) 🫣 
+What you take for granted may not be the truth...?! (당연하다고 여긴것이 진실이 아니었던 적이 있는가..?)
 
 
 
