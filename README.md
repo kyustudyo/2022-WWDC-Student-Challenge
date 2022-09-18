@@ -1,6 +1,6 @@
 
 ## 앱 제출 이름: Scenario World
-SceneKit을 이용하며 영화컨셉임을 나타내는 이름 입니다.
+SceneKit을 이용한 영화컨셉 애니메이션
 ## 내용 🔍 
 There is more than meets the eye. (보이는게 전부가 아닐 수 있다.) 🫣 
 
