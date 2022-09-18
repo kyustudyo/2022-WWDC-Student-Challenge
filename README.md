@@ -2,6 +2,9 @@
 ## 앱 제출 이름: Scenario World
 SceneKit을 이용한 영화컨셉 애니메이션
 - [앱 시연 영상](https://www.youtube.com/watch?v=3iZQ1FoaM1c)
+- ## 참고 🔍
+- 3D모델, 오디오 파일을 포함하지 않았습니다. 또한, 코드만 확인할 수 있어서 앱 빌드가 되지 않습니다!
+
 ## 내용 🔍 
 There is more than meets the eye. (보이는게 전부가 아닐 수 있다.) 🫣 
 
@@ -20,6 +23,3 @@ What you take for granted may not be the truth...?! (당연하다고 여긴것�
 ## Reference
 
 - https://www.udemy.com/course/create-a-3d-game-using-scenekit-and-swift/ 
-
-## 참고 🔍
-- 3D모델, 오디오 파일을 포함하지 않았습니다. 또한, 코드만 확인할 수 있어서 앱 빌드가 되지 않습니다..!
